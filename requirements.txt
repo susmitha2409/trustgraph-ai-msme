@@ -54,3 +54,5 @@ groq==0.9.0
 python-dotenv==1.0.1
 # Loads the four GROQ_API_KEY_1..4 values from a local .env file
 # so API keys are never hardcoded into source files.
+numba==0.59.1
+llvmlite==0.42.0
