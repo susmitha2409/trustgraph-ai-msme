@@ -41,6 +41,16 @@ from llm_report import LLMReportGenerator
 # ------------------------------------------------------------------
 load_dotenv()
 
+# st.set_page_config() MUST be the very first Streamlit command executed,
+# before any other st.* call (including touching st.secrets, which can
+# itself render a warning if no secrets.toml is present).
+st.set_page_config(
+    page_title="TrustGraph AI | MSME Financial Health Card",
+    page_icon="🏦",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 # Bridge Streamlit Cloud secrets into os.environ so api_manager.py
 # (which reads keys via os.environ.get) works both locally with a
 # .env file and when deployed on Streamlit Cloud with st.secrets.
@@ -48,15 +58,8 @@ try:
     for _key in ["GROQ_API_KEY_1", "GROQ_API_KEY_2", "GROQ_API_KEY_3", "GROQ_API_KEY_4"]:
         if _key in st.secrets:
             os.environ[_key] = st.secrets[_key]
-except FileNotFoundError:
+except Exception:
     pass  # no secrets.toml locally — fine, .env / load_dotenv() already handled it
-
-st.set_page_config(
-    page_title="TrustGraph AI | MSME Financial Health Card",
-    page_icon="🏦",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
 
 CSV_PATH = "msme_data.csv"
 
