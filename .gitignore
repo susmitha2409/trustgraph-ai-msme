@@ -1,0 +1,6 @@
+.env
+msme_data.csv
+__pycache__/
+*.pyc
+.venv/
+venv/

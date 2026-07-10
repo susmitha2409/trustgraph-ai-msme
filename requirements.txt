@@ -1,0 +1,56 @@
+# ============================================================
+# TrustGraph AI — Dynamic Financial DNA Engine for MSMEs
+# requirements.txt
+# ============================================================
+
+# --- Core Frontend ---
+streamlit==1.38.0
+# Powers the entire UI: Home, Generate Dataset, Financial DNA Card,
+# Loan Simulator, and AI Report pages. Chosen for rapid, clean,
+# hackathon-friendly dashboards with zero frontend/backend split needed.
+
+# --- Data Handling ---
+pandas==2.2.2
+# Used to generate, store, and manipulate the synthetic MSME dataset
+# (20,000 businesses) as DataFrames, and to save/load CSV files.
+
+numpy==1.26.4
+# Backbone for synthetic data generation — random distributions
+# (revenue, expenses, transactions, coordinates) and numeric
+# feature engineering (ratios, scores).
+
+# --- Machine Learning ---
+scikit-learn==1.5.1
+# Provides RandomForestRegressor / RandomForestClassifier used to
+# predict Financial Health Score, Risk Level, Loan Eligibility,
+# and Recommended Loan Amount. Also used for train/test splitting
+# and preprocessing (encoding categorical features like Sector).
+
+# --- Explainability ---
+shap==0.46.0
+# Generates SHAP values to explain WHY the Random Forest model
+# produced a particular Financial Health Score / Risk Level for
+# a given business — powers the explainability section of the
+# Financial DNA Card.
+
+# --- Visualization ---
+matplotlib==3.9.2
+# Required internally by SHAP to render force plots / bar plots
+# of feature importance. Also used for any custom charts in the
+# Financial DNA Card (gauges, score bars).
+
+plotly==5.24.0
+# Used for modern, interactive Streamlit-native charts — radar
+# charts for the Financial DNA Card, gauges for scores, and
+# EMI/loan simulator visualizations. Keeps the UI "modern but simple."
+
+# --- LLM Integration (Groq) ---
+groq==0.9.0
+# Official Groq Python SDK. Used by api_manager.py to send prompts
+# to Groq's LLM endpoints for generating the professional financial
+# report (Business Summary, Strengths, Weaknesses, Risk, Outlook).
+
+# --- Environment / Config ---
+python-dotenv==1.0.1
+# Loads the four GROQ_API_KEY_1..4 values from a local .env file
+# so API keys are never hardcoded into source files.
