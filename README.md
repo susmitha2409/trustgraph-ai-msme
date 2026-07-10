@@ -128,7 +128,7 @@ This project uses **100% synthetic data** generated programmatically. No real MS
 
 ## 📄 License
 
-[Add your chosen license here — e.g. MIT]
+MIT
 
 ## 🙏 Acknowledgements
 
