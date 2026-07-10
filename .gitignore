@@ -1,6 +1,7 @@
 .env
-msme_data.csv
+venv/
 __pycache__/
 *.pyc
-.venv/
-venv/
+.streamlit/secrets.toml
+*.csv
+.DS_Store
