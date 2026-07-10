@@ -421,6 +421,21 @@ def inject_custom_css():
             padding: 6px 26px 24px 26px;
             margin-top: -8px;
         }}
+        .tg-report-body h1, .tg-report-body h2, .tg-report-body h3,
+        .tg-report-body h4, .tg-report-body h5 {{
+            color: {NAVY} !important;
+            font-weight: 700 !important;
+            margin-top: 18px;
+            margin-bottom: 6px;
+        }}
+        .tg-report-body p, .tg-report-body li, .tg-report-body span {{
+            color: {SLATE} !important;
+            font-size: 14.5px !important;
+            line-height: 1.6;
+        }}
+        .tg-report-body strong, .tg-report-body b {{
+            color: {NAVY} !important;
+        }}
 
         /* ---------- Footer ---------- */
         .tg-footer {{
@@ -1137,11 +1152,10 @@ elif page == "AI Report":
             </div>
             """, unsafe_allow_html=True)
 
-            st.markdown(f"""
-            <div class="tg-report-body">
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown(st.session_state["generated_report"])
+            st.markdown(
+                f'<div class="tg-report-body">\n\n{st.session_state["generated_report"]}\n\n</div>',
+                unsafe_allow_html=True,
+            )
 
             st.write("")
             st.download_button(
