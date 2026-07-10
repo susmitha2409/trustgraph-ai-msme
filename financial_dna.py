@@ -224,29 +224,16 @@ class FinancialDNA:
         X = row_df[self.ml_engine.FEATURE_COLUMNS]
 
         shap_values = self._explainer.shap_values(X)
+        # shap_values shape: (1, num_features) for a regressor
+        values = np.asarray(shap_values)[0]
 
-        # SHAP's return shape/type for a single-output regressor varies by
-        # version: older SHAP -> (1, num_features); newer SHAP -> can be
-        # (1, num_features, 1) or similar. np.squeeze + guard normalizes
-        # this to a flat 1D array of per-feature contributions for our row.
-        values = np.array(shap_values)
-        values = np.squeeze(values)
-        if values.ndim > 1:
-            # Still multi-dimensional (e.g. extra output axis) -> take the
-            # first row/output, which is correct for single-output models.
-            values = values[0]
-        values = values.astype(float)
-
-        # expected_value is a plain float in older SHAP, but a numpy array
-        # or list (e.g. array([53.2])) in newer SHAP versions, even for a
-        # single-output regressor. Normalize to a scalar float either way.
+        # In newer SHAP versions, expected_value can be a scalar, a
+        # 0-d/1-d numpy array, or a list (even for single-output
+        # regressors), so normalize it before converting to float.
         expected_value = self._explainer.expected_value
-        if isinstance(expected_value, (list, tuple, np.ndarray)):
-            expected_value = np.array(expected_value).flatten()
-            base_value = float(expected_value[0])
-        else:
-            base_value = float(expected_value)
-
+        if isinstance(expected_value, (list, np.ndarray)):
+            expected_value = np.asarray(expected_value).flatten()[0]
+        base_value = float(expected_value)
         predicted_value = float(base_value + values.sum())
 
         # Build a readable feature -> impact mapping
